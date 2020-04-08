@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-function searchBar() {
+function SearchBar() {
   var styles;
 
   function headerStyle() {
@@ -22,4 +22,4 @@ function searchBar() {
 }
 
 
-export default searchBar;
+export default SearchBar;

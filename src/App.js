@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
-import searchBar from './searchBar'
+import SearchBar from './searchBar';
+import SearchResult from './SearchResult';
 
-function App() {
 
-  return (
-    <div>
-      <React.StrictMode>
-        <searchBar />
-      </React.StrictMode>
-    </div>
-  );
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      videoData: null,
+    };
+  }
+
+  componentDidMount(){
+    axios.get('')
+    .then(function(response){
+      this.setState({
+        videoData: response, //Might want to get more specific? Maybe at index or certain key. Get only videos here I think. Or leave so it can be passed to any component
+      })
+    })
+  }
+
+  render() {
+    return (
+      <div>
+      <SearchBar />
+      </div>
+    )
+  }
 }
 
 export default App;
