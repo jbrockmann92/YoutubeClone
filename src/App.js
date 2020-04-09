@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      videoData: null,
+      videoData: [1,2,3,4,5,6,7,8,9,10],
       topTen: [],
     };
   }
@@ -18,15 +18,16 @@ class App extends Component {
     axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q=google')
     .then(function(response){
       this.setState({
-        videoData: response, //Might want to get more specific? Maybe at index or certain key. Get only videos here I think. Or leave so it can be passed to any component
+        videoData: response[0], //Might want to get more specific? Maybe at index or certain key. Get only videos here I think. Or leave so it can be passed to any component
       })
     })
+    this.loadTopTen();
   }
 
   loadTopTen = () => {
     var topTenVideos = [];
     for (var i=0; i<10; i++){
-      topTenVideos.push(videoData[i]); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
+      topTenVideos.push(<SearchResult data = {this.state.videoData[i]} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
     }
     this.setState({
       topTen: topTenVideos,
@@ -37,6 +38,9 @@ class App extends Component {
     return (
       <div>
       <SearchBar />
+      <div>
+        {this.state.topTen}
+      </div>
       </div>
     )
   }
