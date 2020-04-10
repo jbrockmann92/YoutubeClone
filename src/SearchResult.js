@@ -2,9 +2,11 @@ import React from 'react';
 
 function SearchResult(props) {
     return (
-        <div>
+        <center>
+            <div>
             {props.data}
-        </div>
+            </div>
+        </center>
     );
 }
 

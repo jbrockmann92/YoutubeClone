@@ -37,7 +37,7 @@ class App extends Component {
   render() {
     return (
       <div>
-      <SearchBar />
+      <SearchBar onClick={this.props.searchClicked} />
       <div>
         {this.state.topTen}
       </div>
