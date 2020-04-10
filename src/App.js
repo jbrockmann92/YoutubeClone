@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      videoData: exampleYouTube['items'][0],
+      videoData: exampleYouTube['items'],
       topTen: [],
       searchParam: '',
     };
@@ -31,7 +31,7 @@ class App extends Component {
     var topTenVideos = [];
     console.log(this.state.videoData);
     for (var i=0; i<10; i++){
-      topTenVideos.push(<SearchResult data = {this.state.videoData} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
+      topTenVideos.push(<SearchResult data = {this.state.videoData[i]} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
     }
     this.setState({
       topTen: topTenVideos,
