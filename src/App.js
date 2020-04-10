@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       videoData: [1,2,3,4,5,6,7,8,9,10],
       topTen: [],
+      searchParam: '',
     };
   }
 
@@ -34,10 +35,14 @@ class App extends Component {
     })
   }
 
+  search = (value) => {
+    this.setState({searchParam: value});
+  }
+
   render() {
     return (
       <div>
-      <SearchBar onClick={this.props.searchClicked} />
+      <SearchBar search = {this.search}/>
       <div>
         {this.state.topTen}
       </div>

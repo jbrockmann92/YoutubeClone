@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import { render } from '@testing-library/react';
+import React from 'react';
 
-function SearchBar() {
-  var styles;
-
-  function headerStyle(){
-    styles = {
-      color: 'red',
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
     }
   }
 
-  headerStyle(); //Do I need this here? Might not need to call the function
-
-  function onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
-    var value = document.getElementById("thisInput").value;
-    console.log(value);
-  }
+    this.setState({value: document.getElementById("thisInput").value})
+    this.props.search(this.state.value);
+    this.setState({value: ''});
+    console.log(this.state.value);
+    }
 
-  return(
-    <center>
-      <h2 style={styles}>YouTube Clone</h2>
-      <form onSubmit={onSubmit}>
-        <input id="thisInput" type="text" placeholder="Search For Videos Here" />
-        <input type="submit" value="Search"></input>
-      </form>
-    </center>
-  );
+  render() {
+    return(
+      <center>
+      <h2 style={{color: 'red'}}>YouTube Clone</h2>
+        <form onSubmit={this.onSubmit}>
+          <input id="thisInput" type="text" placeholder="Search For Videos Here" />
+          <input type="submit" value="Search"></input>
+        </form>
+      </center>
+    )
+  }
 }
 
 export default SearchBar;
