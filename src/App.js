@@ -4,6 +4,7 @@ import SearchBar from './searchBar';
 import SearchResult from './SearchResult';
 import axios from 'axios';
 import exampleYouTube from './exampleYouTube.json';
+import CurrentVideo from './CurrentVideo.js';
 
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
       videoData: exampleYouTube['items'],
       topTen: [],
       searchParam: '',
+      currentVideo: null,
     };
   }
 
@@ -44,8 +46,12 @@ class App extends Component {
     this.setState({
       videoData: null,
       searchParam: null,
+      topTen: null,
+      currentVideo: <CurrentVideo id={id} />
     })
+
     console.log(id);
+
   }
 
   search = (value) => {
@@ -59,6 +65,9 @@ class App extends Component {
         <SearchBar search = {this.search}/>
         <div>
           {this.state.topTen}
+        </div>
+        <div>
+          {this.state.currentVideo}
         </div>
       </div>
     )
