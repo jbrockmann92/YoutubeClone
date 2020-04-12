@@ -27,15 +27,25 @@ class App extends Component {
         videoData: response[0], //Might want to get more specific? Maybe at index or certain key. Get only videos here I think. Or leave so it can be passed to any component
       })
     })
+    .catch(function(error){
+      console.log(error);
+    })
 
     var topTenVideos = [];
-    console.log(this.state.videoData);
     for (var i=0; i<10; i++){
-      topTenVideos.push(<SearchResult data = {this.state.videoData[i]} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
+      topTenVideos.push(<SearchResult data = {this.state.videoData[i]} onVideoClick={this.onVideoClick} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
     }
     this.setState({
       topTen: topTenVideos,
     })
+  }
+
+  onVideoClick = (id) => {
+    this.setState({
+      videoData: null,
+      searchParam: null,
+    })
+    console.log(id);
   }
 
   search = (value) => {
@@ -46,10 +56,10 @@ class App extends Component {
   render() {
     return (
       <div>
-      <SearchBar search = {this.search}/>
-      <div>
-        {this.state.topTen}
-      </div>
+        <SearchBar search = {this.search}/>
+        <div>
+          {this.state.topTen}
+        </div>
       </div>
     )
   }
