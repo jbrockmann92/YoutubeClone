@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import Comment from './Comment';
 
 class CurrentVideo extends React.Component {
     constructor(props){
         super(props);
         this.state={
             youtubeVideo: "https://www.youtube.com/embed/" + this.props.id,
-            comment: '',
+            comment: null,
         }
     }
 

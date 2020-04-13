@@ -5,6 +5,7 @@ import SearchResult from './SearchResult';
 import axios from 'axios';
 import exampleYouTube from './exampleYouTube.json';
 import CurrentVideo from './CurrentVideo.js';
+import Comment from './Comment.js'
 
 class App extends Component {
   constructor(props){
@@ -14,7 +15,7 @@ class App extends Component {
       topTen: [],
       searchParam: 'DevCodeCamp',
       currentVideo: null,
-      comment: '',
+      comments: [],
     };
   }
 
@@ -43,8 +44,9 @@ class App extends Component {
   }
 
   addComment = (comment) => {
+    var finalComment = <Comment data = {comment} like = {0} />
     this.setState({
-      comment: comment,
+      comments: [...this.state.comments, finalComment] //I think I want each of thes to be their own element.
     })
   }
 
@@ -77,7 +79,7 @@ class App extends Component {
           {this.state.currentVideo}
         </div>
         <div>
-          {this.state.comment}
+          {this.state.comments}
         </div>
       </div>
     )
