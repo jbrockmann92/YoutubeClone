@@ -6,15 +6,15 @@ import axios from 'axios';
 import exampleYouTube from './exampleYouTube.json';
 import CurrentVideo from './CurrentVideo.js';
 
-
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       videoData: exampleYouTube['items'],
       topTen: [],
-      searchParam: '',
+      searchParam: 'DevCodeCamp',
       currentVideo: null,
+      comment: '',
     };
   }
 
@@ -22,8 +22,8 @@ class App extends Component {
     this.loadTopTen();
   }
 
-  loadTopTen = () => {
-    axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q=google')
+  loadTopTen = (searchParam) => {
+    axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + searchParam)
     .then(function(response){
       this.setState({
         videoData: response[0], //Might want to get more specific? Maybe at index or certain key. Get only videos here I think. Or leave so it can be passed to any component
@@ -35,28 +35,35 @@ class App extends Component {
 
     var topTenVideos = [];
     for (var i=0; i<10; i++){
-      topTenVideos.push(<SearchResult data = {this.state.videoData[i]} onVideoClick={this.onVideoClick} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
+      topTenVideos.push(<SearchResult key = {i} data = {this.state.videoData[i]} onVideoClick={this.onVideoClick} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
     }
     this.setState({
       topTen: topTenVideos,
     })
   }
 
-  onVideoClick = (id) => {
+  addComment = (comment) => {
+    this.setState({
+      comment: comment,
+    })
+  }
+
+  onVideoClick = (id, title, description) => {
     this.setState({
       videoData: null,
-      searchParam: null,
       topTen: null,
-      currentVideo: <CurrentVideo id={id} />
+      currentVideo: <CurrentVideo id={id} title={title} description={description} addComment={this.addComment} /> //Not a very clean way to do it, but works for now
     })
 
     console.log(id);
+    //this.loadTopTen(this.state.searchParam);
+    //Don't want this right now, but it will be needed later when I use it to populate related videos
 
   }
 
   search = (value) => {
     this.setState({searchParam: value});
-    this.loadTopTen();
+    this.loadTopTen(this.state.searchParam);
   }
 
   render() {
@@ -68,6 +75,9 @@ class App extends Component {
         </div>
         <div>
           {this.state.currentVideo}
+        </div>
+        <div>
+          {this.state.comment}
         </div>
       </div>
     )
