@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Comment from './Comment';
+import axios from 'axios';
 
 class CurrentVideo extends React.Component {
     constructor(props){
@@ -10,12 +11,28 @@ class CurrentVideo extends React.Component {
         }
     }
 
+    componentDidMount() {
+        axios.get('https://localhost:3000') //Probably will need to change
+        .then(function(response){
+          this.setState({
+            comments: response[0], //Might want to get more specific?
+          })
+        })
+        .catch(function(error){
+          console.log(error);
+        })
+    }
+
     addComment = (e) => {
         e.preventDefault();
         this.setState({
             comment: document.getElementById('thisInput').value,
         })
         this.props.addComment(this.state.comment)
+
+        //I think I want to do a put call in here
+
+        //How can I grab them all from the db? Maybe associate the comments with the video id in db?
     }
 
     onChange = (e) => {
@@ -34,7 +51,7 @@ class CurrentVideo extends React.Component {
                 </center>
                 <center>
                     <form onSubmit={this.addComment}>
-                        <input id='thisInput' type='text' onChange={this.onChange} placeholder='Add a comment...' />
+                        <input id='thisInput' type='text' onChange={this.onChange} placeholder='Add a comment...' required />
                         <input type='submit' value='Comment'/>
                     </form>
                 </center>

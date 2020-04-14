@@ -68,9 +68,16 @@ class App extends Component {
     this.loadTopTen(this.state.searchParam);
   }
 
+  defaultStyle = {
+    marginLeft: '250px', 
+    marginRight: '250px', 
+    borderStyle: 'solid',
+    backgroundColor: 'lightgray',
+  }
+
   render() {
     return (
-      <div>
+      <div style={this.defaultStyle}>
         <SearchBar search = {this.search}/>
         <div>
           {this.state.topTen}
