@@ -33,8 +33,9 @@ function Comment(props) {
             <button onClick={() => dislikeComment(dislike + 1)}>Dislike</button>
             <div>
                 {reply}
-                <form>
+                <form onSubmit={e => e.preventDefault()}>
                     <input id='thisInput' type='text' onChange={e => {sendReply(e.target.value)}}></input>
+                    <input type='submit' value='reply'></input>
                 </form>
             </div>
         </div>

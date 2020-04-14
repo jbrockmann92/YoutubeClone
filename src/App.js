@@ -11,9 +11,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      videoData: exampleYouTube['items'],
-      topTen: [],
-      searchParam: 'DevCodeCamp',
+      videoData: null,
+      topTen: null,
       currentVideo: null,
       comments: [],
     };
@@ -24,23 +23,29 @@ class App extends Component {
   }
 
   loadTopTen = (searchParam) => {
-    axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + searchParam)
+    if (searchParam === undefined){
+      searchParam = 'DevCodecamp';
+    }
+    var self = this;
+    axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + searchParam + '&maxResults=10&key=AIzaSyDNQpO_5guTXFVwLEyTCsSFlJPtym3ZP_c')
     .then(function(response){
-      this.setState({
-        videoData: response[0], //Might want to get more specific? Maybe at index or certain key. Get only videos here I think. Or leave so it can be passed to any component
+      self.setState({
+        videoData: response
       })
+      self.setTopTen();
     })
     .catch(function(error){
       console.log(error);
     })
+  }
 
+  setTopTen = () => {
     var topTenVideos = [];
-    for (var i=0; i<10; i++){
-      topTenVideos.push(<SearchResult key = {i} data = {this.state.videoData[i]} onVideoClick={this.onVideoClick} />); //This is going to cause issues because the response is probably only an array of 3, and it's not what I want anyway until I get more specific
+    for (var i=0; i<9; i++){
+      topTenVideos.push(<SearchResult id={i} data={this.state.videoData.data.items[i]} onVideoClick={this.onVideoClick} />)
     }
-    this.setState({
-      topTen: topTenVideos,
-    })
+    this.setState({topTen: topTenVideos})
+    console.log(this.state.topTen);
   }
 
   addComment = (comment) => {
@@ -64,8 +69,7 @@ class App extends Component {
   }
 
   search = (value) => {
-    this.setState({searchParam: value});
-    this.loadTopTen(this.state.searchParam);
+    this.loadTopTen(value);
   }
 
   defaultStyle = {
@@ -78,6 +82,9 @@ class App extends Component {
   render() {
     return (
       <div style={this.defaultStyle}>
+        <center>
+          <h1 style={{color: 'red'}}>YouTube Clone</h1>
+        </center>
         <SearchBar search = {this.search}/>
         <div>
           {this.state.topTen}

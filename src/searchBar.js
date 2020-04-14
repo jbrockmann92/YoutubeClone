@@ -21,9 +21,8 @@ class SearchBar extends React.Component {
   render() {
     return(
       <center>
-      <h2 style={{color: 'red'}}>YouTube Clone</h2>
         <form onSubmit={this.onSubmit}>
-          <input id="thisInput" type="text" onChange={this.onChange} placeholder="Search For Videos Here" />
+          <input className='col-sm-10' id="thisInput" type="text" onChange={this.onChange} placeholder="Search For Videos Here" />
           <input type="submit" value="Search"></input>
         </form>
       </center>

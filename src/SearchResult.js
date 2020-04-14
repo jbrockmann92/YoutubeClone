@@ -1,6 +1,7 @@
 import React from 'react';
 
 function SearchResult(props) {
+    console.log(props);
     var youtubeVideo = props.data['snippet']['thumbnails']['high']['url'];
     return (
         <center>
