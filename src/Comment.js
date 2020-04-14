@@ -6,6 +6,11 @@ function Comment(props) {
     const [like, likeComment] = useState(0);
     const [dislike, dislikeComment] = useState(0);
     const [reply, sendReply] = useState('');
+    const [totalScore, changeScore] = useState(0);
+
+    useEffect(() => {
+        changeScore(like - dislike);
+    }) 
 
     // useEffect(() => {
     //     updateComment(props.data),
@@ -24,13 +29,10 @@ function Comment(props) {
                 {props.data}
             </h5>
             <div>
-                Likes: {like}
-            </div>
-            <button onClick={() => likeComment(like + 1)}>Like</button>
-            <div>
-                Dislikes: {dislike}
+                Score: {totalScore}
             </div>
             <button onClick={() => dislikeComment(dislike + 1)}>Dislike</button>
+            <button onClick={() => likeComment(like + 1)}>Like</button>
             <div>
                 {reply}
                 <form onSubmit={e => e.preventDefault()}>

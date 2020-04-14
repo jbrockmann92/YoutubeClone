@@ -21,7 +21,7 @@ class SearchBar extends React.Component {
   render() {
     return(
       <center>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} style={{padding: '35px'}}>
           <input className='col-sm-10' id="thisInput" type="text" onChange={this.onChange} placeholder="Search For Videos Here" />
           <input type="submit" value="Search"></input>
         </form>

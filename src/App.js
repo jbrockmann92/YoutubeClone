@@ -6,6 +6,7 @@ import axios from 'axios';
 import exampleYouTube from './exampleYouTube.json';
 import CurrentVideo from './CurrentVideo.js';
 import Comment from './Comment.js'
+import apiKeys from './apiKeys'
 
 class App extends Component {
   constructor(props){
@@ -27,7 +28,7 @@ class App extends Component {
       searchParam = 'DevCodecamp';
     }
     var self = this;
-    axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + searchParam + '&maxResults=10&key=AIzaSyDNQpO_5guTXFVwLEyTCsSFlJPtym3ZP_c')
+    axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + searchParam + '&maxResults=10&key=' + apiKeys.googleKey)
     .then(function(response){
       self.setState({
         videoData: response
@@ -83,7 +84,7 @@ class App extends Component {
     return (
       <div style={this.defaultStyle}>
         <center>
-          <h1 style={{color: 'red'}}>YouTube Clone</h1>
+          <h1 style={{color: 'red', backgroundColor: 'black', padding: '35px'}}>YouTube Clone</h1>
         </center>
         <SearchBar search = {this.search}/>
         <div>
