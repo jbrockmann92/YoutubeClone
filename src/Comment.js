@@ -34,9 +34,8 @@ function Comment(props) {
             <div>
                 {reply}
                 <form>
-                    <input id='thisInput' type='text'></input>
+                    <input id='thisInput' type='text' onChange={e => {sendReply(e.target.value)}}></input>
                 </form>
-                <button onClick={() => sendReply(document.getElementById('thisInput').value)}>Reply</button>
             </div>
         </div>
     )
